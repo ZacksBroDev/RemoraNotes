@@ -13,11 +13,13 @@ An iOS-first React Native app built with Expo for managing personal memory and l
 ## Quick Start
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
 
 2. Start the development server:
+
    ```bash
    npx expo start
    ```
