@@ -17,6 +17,7 @@ import { ImportScreen } from './src/screens/ImportScreen';
 import { PersonScreen } from './src/screens/PersonScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 import { TodoScreen } from './src/screens/TodoScreen';
+import { DialScreen } from './src/screens/DialScreen';
 
 const Stack = createNativeStackNavigator();
 
