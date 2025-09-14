@@ -168,6 +168,15 @@ const AppContent = () => {
             headerBackTitle: 'Back',
           }}
         />
+        
+        <Stack.Screen 
+          name="Dial" 
+          component={DialScreen}
+          options={{
+            title: 'Quick Access',
+            headerBackTitle: 'Back',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
