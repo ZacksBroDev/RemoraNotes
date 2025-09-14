@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  View, 
-  Text, 
-  ScrollView, 
-  StyleSheet, 
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
   TouchableOpacity,
   Alert,
   TextInput,
-  Modal
-} from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
-import { PillButton } from '../components/PillButton';
-import { ListRow } from '../components/ListRow';
-import { getTodosForTomorrow, createTodo, toggleTodoComplete, deleteTodo } from '../data/todos';
+  Modal,
+} from "react-native";
+import { useTheme } from "../theme/ThemeContext";
+import { PillButton } from "../components/PillButton";
+import { ListRow } from "../components/ListRow";
+import {
+  getTodosForTomorrow,
+  createTodo,
+  toggleTodoComplete,
+  deleteTodo,
+} from "../data/todos";
 
 export const TodoScreen = ({ navigation }) => {
   const theme = useTheme();
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newTodoTitle, setNewTodoTitle] = useState('');
-  const [newTodoDescription, setNewTodoDescription] = useState('');
-  const [newTodoPriority, setNewTodoPriority] = useState('medium');
+  const [newTodoTitle, setNewTodoTitle] = useState("");
+  const [newTodoDescription, setNewTodoDescription] = useState("");
+  const [newTodoPriority, setNewTodoPriority] = useState("medium");
 
   const loadTodos = async () => {
     try {
@@ -29,8 +34,8 @@ export const TodoScreen = ({ navigation }) => {
       const tomorrowTodos = await getTodosForTomorrow();
       setTodos(tomorrowTodos);
     } catch (error) {
-      console.error('Error loading todos:', error);
-      Alert.alert('Error', 'Failed to load todos.');
+      console.error("Error loading todos:", error);
+      Alert.alert("Error", "Failed to load todos.");
     } finally {
       setLoading(false);
     }
@@ -42,29 +47,29 @@ export const TodoScreen = ({ navigation }) => {
 
   const handleAddTodo = async () => {
     if (!newTodoTitle.trim()) {
-      Alert.alert('Error', 'Please enter a todo title.');
+      Alert.alert("Error", "Please enter a todo title.");
       return;
     }
 
     try {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
-      
+
       await createTodo({
         title: newTodoTitle.trim(),
         description: newTodoDescription.trim() || null,
         dueDate: tomorrow.toISOString(),
-        priority: newTodoPriority
+        priority: newTodoPriority,
       });
 
-      setNewTodoTitle('');
-      setNewTodoDescription('');
-      setNewTodoPriority('medium');
+      setNewTodoTitle("");
+      setNewTodoDescription("");
+      setNewTodoPriority("medium");
       setShowAddModal(false);
       loadTodos();
     } catch (error) {
-      console.error('Error adding todo:', error);
-      Alert.alert('Error', 'Failed to add todo.');
+      console.error("Error adding todo:", error);
+      Alert.alert("Error", "Failed to add todo.");
     }
   };
 
@@ -73,49 +78,53 @@ export const TodoScreen = ({ navigation }) => {
       await toggleTodoComplete(todoId);
       loadTodos();
     } catch (error) {
-      console.error('Error toggling todo:', error);
-      Alert.alert('Error', 'Failed to update todo.');
+      console.error("Error toggling todo:", error);
+      Alert.alert("Error", "Failed to update todo.");
     }
   };
 
   const handleDeleteTodo = async (todoId) => {
-    Alert.alert(
-      'Delete Todo',
-      'Are you sure you want to delete this todo?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await deleteTodo(todoId);
-              loadTodos();
-            } catch (error) {
-              console.error('Error deleting todo:', error);
-              Alert.alert('Error', 'Failed to delete todo.');
-            }
+    Alert.alert("Delete Todo", "Are you sure you want to delete this todo?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await deleteTodo(todoId);
+            loadTodos();
+          } catch (error) {
+            console.error("Error deleting todo:", error);
+            Alert.alert("Error", "Failed to delete todo.");
           }
-        }
-      ]
-    );
+        },
+      },
+    ]);
   };
 
   const getPriorityEmoji = (priority) => {
     switch (priority) {
-      case 'high': return '🔴';
-      case 'medium': return '🟡';
-      case 'low': return '🟢';
-      default: return '⚪';
+      case "high":
+        return "🔴";
+      case "medium":
+        return "🟡";
+      case "low":
+        return "🟢";
+      default:
+        return "⚪";
     }
   };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'high': return '#FF3B30';
-      case 'medium': return '#FF9500';
-      case 'low': return '#34C759';
-      default: return theme.colors.textSecondary;
+      case "high":
+        return "#FF3B30";
+      case "medium":
+        return "#FF9500";
+      case "low":
+        return "#34C759";
+      default:
+        return theme.colors.textSecondary;
     }
   };
 
@@ -130,9 +139,9 @@ export const TodoScreen = ({ navigation }) => {
       paddingBottom: theme.spacing.md,
     },
     titleRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       marginBottom: theme.spacing.md,
     },
     title: {
@@ -148,25 +157,25 @@ export const TodoScreen = ({ navigation }) => {
     },
     emptyState: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       paddingVertical: theme.spacing.xxl,
     },
     emptyTitle: {
       ...theme.typography.title1,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.sm,
       color: theme.colors.text,
     },
     emptySubtitle: {
       ...theme.typography.body,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.xl,
       color: theme.colors.textSecondary,
     },
     todoItem: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       paddingVertical: theme.spacing.md,
       paddingHorizontal: theme.spacing.md,
       backgroundColor: theme.colors.card,
@@ -182,7 +191,7 @@ export const TodoScreen = ({ navigation }) => {
       color: theme.colors.text,
     },
     todoTitleCompleted: {
-      textDecorationLine: 'line-through',
+      textDecorationLine: "line-through",
       opacity: 0.6,
     },
     todoDescription: {
@@ -201,22 +210,22 @@ export const TodoScreen = ({ navigation }) => {
     },
     modalOverlay: {
       flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      justifyContent: 'center',
-      alignItems: 'center',
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      justifyContent: "center",
+      alignItems: "center",
     },
     modalContent: {
       backgroundColor: theme.colors.background,
       borderRadius: theme.borderRadius.lg,
       padding: theme.spacing.lg,
-      width: '90%',
+      width: "90%",
       maxWidth: 400,
     },
     modalTitle: {
       ...theme.typography.title1,
       color: theme.colors.text,
       marginBottom: theme.spacing.lg,
-      textAlign: 'center',
+      textAlign: "center",
     },
     input: {
       borderWidth: 1,
@@ -229,16 +238,16 @@ export const TodoScreen = ({ navigation }) => {
     },
     inputMultiline: {
       height: 80,
-      textAlignVertical: 'top',
+      textAlignVertical: "top",
     },
     prioritySelector: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
+      flexDirection: "row",
+      justifyContent: "space-around",
       marginBottom: theme.spacing.lg,
     },
     modalButtons: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+      flexDirection: "row",
+      justifyContent: "space-between",
     },
     modalButton: {
       flex: 1,
@@ -278,17 +287,17 @@ export const TodoScreen = ({ navigation }) => {
             <View key={todo.id} style={styles.todoItem}>
               <TouchableOpacity onPress={() => handleToggleComplete(todo.id)}>
                 <Text style={{ fontSize: 20 }}>
-                  {todo.completed ? '✅' : '⭕'}
+                  {todo.completed ? "✅" : "⭕"}
                 </Text>
               </TouchableOpacity>
-              
+
               <View
                 style={[
                   styles.priorityIndicator,
-                  { backgroundColor: getPriorityColor(todo.priority) }
+                  { backgroundColor: getPriorityColor(todo.priority) },
                 ]}
               />
-              
+
               <View style={styles.todoContent}>
                 <Text
                   style={[
@@ -307,7 +316,9 @@ export const TodoScreen = ({ navigation }) => {
                 style={styles.deleteButton}
                 onPress={() => handleDeleteTodo(todo.id)}
               >
-                <Text style={{ fontSize: 16, color: theme.colors.destructive }}>🗑️</Text>
+                <Text style={{ fontSize: 16, color: theme.colors.destructive }}>
+                  🗑️
+                </Text>
               </TouchableOpacity>
             </View>
           ))
@@ -323,7 +334,7 @@ export const TodoScreen = ({ navigation }) => {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Add New Todo</Text>
-            
+
             <TextInput
               style={styles.input}
               placeholder="Todo title"
@@ -331,7 +342,7 @@ export const TodoScreen = ({ navigation }) => {
               value={newTodoTitle}
               onChangeText={setNewTodoTitle}
             />
-            
+
             <TextInput
               style={[styles.input, styles.inputMultiline]}
               placeholder="Description (optional)"
@@ -346,22 +357,22 @@ export const TodoScreen = ({ navigation }) => {
                 title="Low"
                 emoji="🟢"
                 size="small"
-                variant={newTodoPriority === 'low' ? 'primary' : 'outline'}
-                onPress={() => setNewTodoPriority('low')}
+                variant={newTodoPriority === "low" ? "primary" : "outline"}
+                onPress={() => setNewTodoPriority("low")}
               />
               <PillButton
                 title="Medium"
                 emoji="🟡"
                 size="small"
-                variant={newTodoPriority === 'medium' ? 'primary' : 'outline'}
-                onPress={() => setNewTodoPriority('medium')}
+                variant={newTodoPriority === "medium" ? "primary" : "outline"}
+                onPress={() => setNewTodoPriority("medium")}
               />
               <PillButton
                 title="High"
                 emoji="🔴"
                 size="small"
-                variant={newTodoPriority === 'high' ? 'primary' : 'outline'}
-                onPress={() => setNewTodoPriority('high')}
+                variant={newTodoPriority === "high" ? "primary" : "outline"}
+                onPress={() => setNewTodoPriority("high")}
               />
             </View>
 

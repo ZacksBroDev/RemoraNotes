@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated, PanGestureHandler } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+  PanGestureHandler,
+} from "react-native";
+import { useTheme } from "../theme/ThemeContext";
 
 export const DialInterface = ({ options, onSelect, style }) => {
   const theme = useTheme();
@@ -21,18 +28,18 @@ export const DialInterface = ({ options, onSelect, style }) => {
     container: {
       width: (radius + 20) * 2,
       height: (radius + 20) * 2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      position: 'relative',
+      justifyContent: "center",
+      alignItems: "center",
+      position: "relative",
     },
     center: {
-      position: 'absolute',
+      position: "absolute",
       width: 60,
       height: 60,
       borderRadius: 30,
       backgroundColor: theme.colors.primary,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       zIndex: 10,
     },
     centerText: {
@@ -40,13 +47,13 @@ export const DialInterface = ({ options, onSelect, style }) => {
       fontSize: 24,
     },
     option: {
-      position: 'absolute',
+      position: "absolute",
       width: 50,
       height: 50,
       borderRadius: 25,
       backgroundColor: theme.colors.card,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       shadowColor: theme.colors.shadow,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
@@ -59,14 +66,14 @@ export const DialInterface = ({ options, onSelect, style }) => {
     },
     optionText: {
       fontSize: 20,
-      textAlign: 'center',
+      textAlign: "center",
     },
     optionLabel: {
-      position: 'absolute',
+      position: "absolute",
       fontSize: 12,
       color: theme.colors.text,
-      fontWeight: '600',
-      textAlign: 'center',
+      fontWeight: "600",
+      textAlign: "center",
     },
   });
 
@@ -82,7 +89,7 @@ export const DialInterface = ({ options, onSelect, style }) => {
         const angle = (index * 2 * Math.PI) / options.length - Math.PI / 2;
         const x = centerX + radius * Math.cos(angle) - 25;
         const y = centerY + radius * Math.sin(angle) - 25;
-        
+
         const labelX = centerX + (radius + 35) * Math.cos(angle) - 20;
         const labelY = centerY + (radius + 35) * Math.sin(angle) - 10;
 
@@ -98,11 +105,11 @@ export const DialInterface = ({ options, onSelect, style }) => {
             >
               <Text style={styles.optionText}>{option.emoji}</Text>
             </TouchableOpacity>
-            
+
             <Text
               style={[
                 styles.optionLabel,
-                { left: labelX, top: labelY, width: 40 }
+                { left: labelX, top: labelY, width: 40 },
               ]}
             >
               {option.label}

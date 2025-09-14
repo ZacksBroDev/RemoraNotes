@@ -1,18 +1,18 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useTheme } from "../theme/ThemeContext";
 
-export const ListRow = ({ 
+export const ListRow = ({
   title,
   subtitle,
   emoji,
   rightElement,
   color,
   onPress,
-  style
+  style,
 }) => {
   const theme = useTheme();
-  
+
   const styles = StyleSheet.create({
     container: {
       backgroundColor: theme.colors.surfaceSecondary,
@@ -22,8 +22,8 @@ export const ListRow = ({
       ...theme.shadows.small,
     },
     content: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       padding: theme.spacing.md,
       minHeight: theme.touchTargets.large,
     },
@@ -50,8 +50,8 @@ export const ListRow = ({
       color: theme.colors.textSecondary,
     },
     rightContainer: {
-      alignItems: 'flex-end',
-      justifyContent: 'center',
+      alignItems: "flex-end",
+      justifyContent: "center",
     },
   });
 
@@ -59,18 +59,11 @@ export const ListRow = ({
     <View style={[styles.container, style]}>
       <View style={styles.content}>
         {color && (
-          <View 
-            style={[
-              styles.colorIndicator, 
-              { backgroundColor: color }
-            ]} 
-          />
+          <View style={[styles.colorIndicator, { backgroundColor: color }]} />
         )}
-        
-        {emoji && (
-          <Text style={styles.emoji}>{emoji}</Text>
-        )}
-        
+
+        {emoji && <Text style={styles.emoji}>{emoji}</Text>}
+
         <View style={styles.textContainer}>
           <Text style={styles.title} numberOfLines={1}>
             {title}
@@ -81,11 +74,9 @@ export const ListRow = ({
             </Text>
           )}
         </View>
-        
+
         {rightElement && (
-          <View style={styles.rightContainer}>
-            {rightElement}
-          </View>
+          <View style={styles.rightContainer}>{rightElement}</View>
         )}
       </View>
     </View>
@@ -93,10 +84,10 @@ export const ListRow = ({
 
   if (onPress) {
     return (
-      <TouchableOpacity 
-        onPress={onPress} 
+      <TouchableOpacity
+        onPress={onPress}
         activeOpacity={0.8}
-        style={{ backgroundColor: 'transparent' }}
+        style={{ backgroundColor: "transparent" }}
       >
         {Row}
       </TouchableOpacity>

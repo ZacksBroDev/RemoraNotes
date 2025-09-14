@@ -1,6 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
+import React, { useState, useRef } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import { useTheme } from "../theme/ThemeContext";
 
 export const AlphabeticalScrollView = ({ data, renderItem, style }) => {
   const theme = useTheme();
@@ -19,7 +25,7 @@ export const AlphabeticalScrollView = ({ data, renderItem, style }) => {
 
   // Create sorted alphabet
   const alphabet = Object.keys(groupedData).sort();
-  const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   const handleLetterPress = (letter) => {
     const position = itemPositions[letter];
@@ -30,37 +36,37 @@ export const AlphabeticalScrollView = ({ data, renderItem, style }) => {
 
   const handleSectionLayout = (letter, event) => {
     const { y } = event.nativeEvent.layout;
-    setItemPositions(prev => ({ ...prev, [letter]: y }));
+    setItemPositions((prev) => ({ ...prev, [letter]: y }));
   };
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      flexDirection: 'row',
+      flexDirection: "row",
     },
     scrollContainer: {
       flex: 1,
     },
     alphabetContainer: {
-      position: 'absolute',
+      position: "absolute",
       right: 0,
       top: 0,
       bottom: 0,
       width: 24,
-      justifyContent: 'center',
-      backgroundColor: theme.colors.background + 'E0',
+      justifyContent: "center",
+      backgroundColor: theme.colors.background + "E0",
       zIndex: 1,
     },
     letterButton: {
       paddingVertical: 1,
       paddingHorizontal: 4,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       minHeight: 16,
     },
     letterText: {
       fontSize: 10,
-      fontWeight: '600',
+      fontWeight: "600",
       color: theme.colors.primary,
     },
     letterTextDisabled: {
@@ -77,7 +83,7 @@ export const AlphabeticalScrollView = ({ data, renderItem, style }) => {
     sectionHeaderText: {
       ...theme.typography.headline,
       color: theme.colors.primary,
-      fontWeight: '600',
+      fontWeight: "600",
     },
   });
 
@@ -100,7 +106,7 @@ export const AlphabeticalScrollView = ({ data, renderItem, style }) => {
           </View>
         ))}
       </ScrollView>
-      
+
       <View style={styles.alphabetContainer}>
         {allLetters.map((letter) => {
           const hasData = alphabet.includes(letter);

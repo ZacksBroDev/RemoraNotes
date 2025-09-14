@@ -8,7 +8,9 @@ export const getTodos = async () => {
 
 export const getTodosForDate = async (date) => {
   const targetDate = new Date(date).toDateString();
-  return todos.filter(todo => new Date(todo.dueDate).toDateString() === targetDate);
+  return todos.filter(
+    (todo) => new Date(todo.dueDate).toDateString() === targetDate
+  );
 };
 
 export const createTodo = async (todo) => {
@@ -18,24 +20,24 @@ export const createTodo = async (todo) => {
     description: todo.description || null,
     dueDate: todo.dueDate,
     completed: false,
-    priority: todo.priority || 'medium', // low, medium, high
-    category: todo.category || 'general', // general, follow-up, birthday, etc.
+    priority: todo.priority || "medium", // low, medium, high
+    category: todo.category || "general", // general, follow-up, birthday, etc.
     personId: todo.personId || null, // link to a person if relevant
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   };
-  
+
   todos.push(newTodo);
   return newTodo.id;
 };
 
 export const updateTodo = async (id, updates) => {
-  const todoIndex = todos.findIndex(t => t.id === id);
+  const todoIndex = todos.findIndex((t) => t.id === id);
   if (todoIndex !== -1) {
-    todos[todoIndex] = { 
-      ...todos[todoIndex], 
-      ...updates, 
-      updated_at: new Date().toISOString() 
+    todos[todoIndex] = {
+      ...todos[todoIndex],
+      ...updates,
+      updated_at: new Date().toISOString(),
     };
     return todos[todoIndex];
   }
@@ -43,12 +45,12 @@ export const updateTodo = async (id, updates) => {
 };
 
 export const deleteTodo = async (id) => {
-  todos = todos.filter(t => t.id !== id);
+  todos = todos.filter((t) => t.id !== id);
   return true;
 };
 
 export const toggleTodoComplete = async (id) => {
-  const todo = todos.find(t => t.id === id);
+  const todo = todos.find((t) => t.id === id);
   if (todo) {
     todo.completed = !todo.completed;
     todo.updated_at = new Date().toISOString();

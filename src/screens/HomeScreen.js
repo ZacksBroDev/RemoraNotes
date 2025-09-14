@@ -8,6 +8,7 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "../theme/ThemeContext";
 import { SegmentedControl } from "../components/SegmentedControl";
@@ -37,7 +38,7 @@ export const HomeScreen = ({ navigation }) => {
   const [tabs, setTabs] = useState([
     { title: "Friends", emoji: "👥" },
     { title: "Family", emoji: "👨‍👩‍👧‍👦" },
-    { title: "Favorites", emoji: "⭐" },
+    { title: "Favs", emoji: "⭐" },
     { title: "All", emoji: "📋" },
   ]);
 
@@ -56,7 +57,7 @@ export const HomeScreen = ({ navigation }) => {
       ];
 
       if (currentSettings.showClientsTab) {
-        dynamicTabs.push({ title: "Clients", emoji: "💼" });
+        dynamicTabs.push({ title: "Work", emoji: "💼" });
       }
 
       dynamicTabs.push({ title: "All", emoji: "📋" });
@@ -109,7 +110,7 @@ export const HomeScreen = ({ navigation }) => {
     ];
 
     if (newSettings.showClientsTab) {
-      dynamicTabs.push({ title: "Clients", emoji: "💼" });
+      dynamicTabs.push({ title: "Work", emoji: "💼" });
     }
 
     dynamicTabs.push({ title: "All", emoji: "📋" });
@@ -198,14 +199,22 @@ export const HomeScreen = ({ navigation }) => {
               : "Add friends to keep track of your social connections"}
           </Text>
           {!selectedColorFilter && (
-            <PillButton
-              title="Add Friend"
-              emoji="➕"
-              onPress={() =>
-                navigation.navigate("Person", { isNew: true, type: "friend" })
-              }
-              style={styles.importButton}
-            />
+            <>
+              <PillButton
+                title="Add Friend"
+                emoji="➕"
+                onPress={() =>
+                  navigation.navigate("Person", { isNew: true, type: "friend" })
+                }
+                style={styles.importButton}
+              />
+              <PillButton
+                title="Import Contacts"
+                emoji="📱"
+                onPress={() => navigation.navigate("Import")}
+                style={[styles.importButton, { marginTop: theme.spacing.md }]}
+              />
+            </>
           )}
         </View>
       );
@@ -445,6 +454,12 @@ export const HomeScreen = ({ navigation }) => {
             }
             style={styles.importButton}
           />
+          <PillButton
+            title="Import Contacts"
+            emoji="📱"
+            onPress={() => navigation.navigate("Import")}
+            style={[styles.importButton, { marginTop: theme.spacing.md }]}
+          />
         </View>
       );
     }
@@ -504,9 +519,9 @@ export const HomeScreen = ({ navigation }) => {
         return renderFriendsTab();
       case "Family":
         return renderFamilyTab();
-      case "Favorites":
+      case "Favs":
         return renderFavoritesTab();
-      case "Clients":
+      case "Work":
         return renderClientsTab();
       case "All":
         return renderAllTab();
@@ -522,7 +537,7 @@ export const HomeScreen = ({ navigation }) => {
     },
     header: {
       paddingHorizontal: theme.spacing.md,
-      paddingTop: theme.spacing.lg,
+      paddingTop: theme.spacing.sm,
       paddingBottom: theme.spacing.md,
     },
     titleRow: {
@@ -640,11 +655,17 @@ export const HomeScreen = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>RemoraNotes</Text>
           <View style={styles.headerButtons}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Import")}
+              style={styles.headerButton}
+            >
+              <Text style={styles.headerEmoji}>📱</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate("Todo")}
               style={styles.headerButton}
@@ -683,6 +704,6 @@ export const HomeScreen = ({ navigation }) => {
       >
         {renderContent()}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
