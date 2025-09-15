@@ -140,6 +140,16 @@ export const ImportScreen = ({ navigation }) => {
     setSelectedContacts(newContactIds);
   };
 
+  const selectExistingContacts = () => {
+    const existingContactIds = new Set();
+    contacts.forEach((contact) => {
+      if (contactStatus[contact.id]?.status === "existing") {
+        existingContactIds.add(contact.id);
+      }
+    });
+    setSelectedContacts(existingContactIds);
+  };
+
   const deselectAllContacts = () => {
     setSelectedContacts(new Set());
   };
